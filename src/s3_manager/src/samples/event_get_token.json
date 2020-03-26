@@ -1,0 +1,51 @@
+{
+	"resource": "/bucket",
+	"path": "/bucket",
+	"httpMethod": "PUT",
+	"headers": {
+		"x-tenant-id": "TenantA",
+		"x-user-id": "user1"
+	},
+	"multiValueHeaders": {
+		"x-tenant-id": ["TenantA"],
+		"x-user-id": ["user1"]
+	},
+	"queryStringParameters": null,
+	"multiValueQueryStringParameters": null,
+	"pathParameters": null,
+	"stageVariables": null,
+	"requestContext": {
+		"resourceId": "ppzbog",
+		"resourcePath": "/bucket",
+		"httpMethod": "PUT",
+		"extendedRequestId": "I7zqgFG2oAMFy8A=",
+		"requestTime": "05/Mar/2020:20:51:15 +0000",
+		"path": "/bucket",
+		"accountId": "<Account-Id>",
+		"protocol": "HTTP/1.1",
+		"stage": "test-invoke-stage",
+		"domainPrefix": "testPrefix",
+		"requestTimeEpoch": 1583441475109,
+		"requestId": "05de2cae-d84d-40fb-b1f4-373b4492a215",
+		"identity": {
+			"cognitoIdentityPoolId": null,
+			"cognitoIdentityId": null,
+			"apiKey": "test-invoke-api-key",
+			"principalOrgId": null,
+			"cognitoAuthenticationType": null,
+			"userArn": "arn:aws:iam::<Account-Id>:user/dev",
+			"apiKeyId": "test-invoke-api-key-id",
+			"userAgent": "aws-internal/3 aws-sdk-java/1.11.719 Linux/4.9.184-0.1.ac.235.83.329.metal1.x86_64 OpenJDK_64-Bit_Server_VM/25.242-b08 java/1.8.0_242 vendor/Oracle_Corporation",
+			"accountId": "<Account-Id>",
+			"caller": "AIDAVKYPAMPM2GA7JBHVV",
+			"sourceIp": "test-invoke-source-ip",
+			"accessKey": "",
+			"cognitoAuthenticationProvider": null,
+			"user": "AIDAVKYPAMPM2GA7JBHVV"
+		},
+		"domainName": "testPrefix.testDomainName",
+		"apiId": "16nwyok493"
+	},
+	"body": null,
+	"isBase64Encoded": false
+}

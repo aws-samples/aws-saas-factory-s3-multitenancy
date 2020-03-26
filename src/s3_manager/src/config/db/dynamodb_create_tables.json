@@ -1,0 +1,25 @@
+{
+	"AttributeDefinitions": [{
+			"AttributeName": "id_concat",
+			"AttributeType": "S"
+		},
+		{
+			"AttributeName": "key_name",
+			"AttributeType": "S"
+		}
+	],
+	"TableName": "aws-saas-s3-tenantmd",
+	"KeySchema": [{
+			"AttributeName": "id_concat",
+			"KeyType": "HASH"
+		},
+		{
+			"AttributeName": "key_name",
+			"KeyType": "RANGE"
+		}
+	],
+	"ProvisionedThroughput": {
+		"ReadCapacityUnits": 5,
+		"WriteCapacityUnits": 5
+	}
+}

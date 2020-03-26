@@ -1,0 +1,194 @@
+openapi: 3.0.0
+info:
+  title: Data Partitioning using S3
+  version: 1.0.0
+  description: >-
+    OpenAPI spec to store multi-tenant data using Amazon Simple Storage Service (S3).
+  contact:
+    email: sujitkh@amazon.com
+    name: Sujit Khasnis
+
+tags:
+  - name: APIs
+  - name: Token Manager
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+  schemas:
+    Error:
+      type: object
+      required:
+        - code
+        - message
+      properties:
+        code:
+          type: integer
+          format: int32
+        message:
+          type: string
+    ResourceName:
+      type: object
+      properties:
+        name:
+          type: string
+          description: resource name
+  responses:
+    Success:
+      description: Successful operation
+    BadRequest:
+      description: Bad Request
+    Unauthorized:
+      description: Missing or invalid token
+    NotFound:
+      description: Not found
+    InvalidInput:
+      description: Invalid input
+    InternalServerError:
+      description: Server error
+    ServiceUnavailable:
+      description: Service Unavailable
+
+paths:
+  /object:
+    put:
+      tags:
+        - APIs
+      summary: Store object in S3 based on valid token and Partition approach
+      operationId: put_object
+      parameters:
+        - in: query
+          name: partition
+          schema:
+            type: string
+            enum: [bucket, prefix, tag, access_point, db_nosql]
+          description: Partition type
+          required: true
+        - in: header
+          name: x-token
+          schema:
+            type: string
+            format: uuid
+          required: true
+      security:
+        - bearerAuth: []
+      requestBody:
+        description: One or more files to upload
+        content:
+          multipart/form-data:
+            schema:
+              properties:
+                file:
+                  type: array
+                  items:
+                    type: string
+                    format: binary
+      responses:
+        '201':
+          $ref: '#/components/responses/Success'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+        '502':
+          $ref: '#/components/responses/ServiceUnavailable'
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    get:
+      tags:
+        - APIs
+      summary: Retrieve objects from S3 based on valid token and Partition approach
+      operationId: get_object
+      parameters:
+        - in: query
+          name: partition
+          schema:
+            type: string
+            enum: [bucket, prefix, tag, access_point, db_nosql]
+          description: Partition type
+          required: true
+        - in: header
+          name: x-token
+          schema:
+            type: string
+            format: uuid
+          required: true
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ResourceName'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '405':
+          $ref: '#/components/responses/InvalidInput'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+        '502':
+          $ref: '#/components/responses/ServiceUnavailable'
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /token:
+    get:
+      tags:
+        - Token Manager
+      summary: Get JWT token based on user and tenant context
+      operationId: get_token
+      parameters:
+        - in: header
+          name: x-tenant-id
+          schema:
+            type: string
+          description: Unique Tenant Id
+          required: true
+        - in: header
+          name: x-user-id
+          schema:
+            type: string
+          description: Unique User Id
+          required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ResourceName'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '405':
+          $ref: '#/components/responses/InvalidInput'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+        '502':
+          $ref: '#/components/responses/ServiceUnavailable'
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'

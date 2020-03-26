@@ -1,0 +1,90 @@
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Action": [
+        "logs:CreateLogGroup",
+        "logs:CreateLogStream",
+        "logs:PutLogEvents"
+      ],
+      "Resource": "*"
+    },
+    {
+      "Effect": "Allow",
+      "Action": [
+        "sts:AssumeRole"
+      ],
+      "Resource": "*"
+    },
+    {
+      "Effect": "Allow",
+      "Action": [
+        "s3:CreateBucket",
+        "s3:ListAllMyBuckets",
+        "s3:GetBucketLocation",
+        "s3:CreateAccessPoint",
+        "s3:PutBucketPublicAccessBlock"
+      ],
+      "Resource": [
+        "*"
+      ]
+    },
+    {
+      "Effect": "Allow",
+      "Action": [
+        "s3:ListBucket"
+      ],
+      "Resource": [
+        "*"
+      ],
+      "Condition": {
+        "StringLike": {
+          "s3:DataAccessPointArn": "{access_point_arn}"
+        },
+        "StringEqualsIgnoreCase": {
+          "s3:prefix": "{tenant_id}/{user_id}"
+        }
+      }
+    },
+    {
+      "Effect": "Allow",
+      "Action": [
+        "s3:GetAccessPoint"
+      ],
+      "Resource": [
+        "*"
+      ],
+      "Condition": {
+        "StringLike": {
+          "s3:DataAccessPointArn": "{access_point_arn}"
+        }
+      }
+    },
+    {
+      "Effect": "Allow",
+      "Action": [
+        "s3:PutObject"
+      ],
+      "Resource": [
+        "{bucket_arn}/{tenant_id}/{user_id}/*",
+        "{access_point_arn}/object/{user_id}/*"
+      ]
+    },
+    {
+      "Effect": "Allow",
+      "Action": [
+        "s3:GetObject"
+      ],
+      "Resource": [
+        "{bucket_arn}/{tenant_id}/{user_id}/*",
+        "{access_point_arn}/object/{user_id}/*"
+      ],
+      "Condition": {
+        "StringLike": {
+          "s3:DataAccessPointArn": "{access_point_arn}"
+        }
+      }
+    }
+  ]
+}

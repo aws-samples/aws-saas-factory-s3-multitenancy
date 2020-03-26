@@ -1,0 +1,53 @@
+{
+	"resource": "/apis",
+	"path": "/apis",
+	"httpMethod": "GET",
+	"headers": {
+		"x-token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0ZW5hbnRfaWQiOiJUZW5hbnRBIiwidXNlcl9pZCI6InVzZXIxIn0.Z7Q_E0Q3mRsB8qKb4oNdfSaoB2JKOoJ_DLRI_z54FBM"
+	},
+	"multiValueHeaders": {
+		"x-token": ["eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0ZW5hbnRfaWQiOiJUZW5hbnRBIiwidXNlcl9pZCI6InVzZXIxIn0.Z7Q_E0Q3mRsB8qKb4oNdfSaoB2JKOoJ_DLRI_z54FBM"]
+	},
+	"queryStringParameters": {
+		"partition": "bucket"
+	},
+	"multiValueQueryStringParameters": {
+		"partition": ["bucket"]
+	},
+	"pathParameters": null,
+	"stageVariables": null,
+	"requestContext": {
+		"resourceId": "blfkl5",
+		"resourcePath": "/apis",
+		"httpMethod": "GET",
+		"extendedRequestId": "I-VzCEY2IAMFR-Q=",
+		"requestTime": "06/Mar/2020:15:18:04 +0000",
+		"path": "/apis",
+		"accountId": "<Account-Id>",
+		"protocol": "HTTP/1.1",
+		"stage": "test-invoke-stage",
+		"domainPrefix": "testPrefix",
+		"requestTimeEpoch": 1583507884928,
+		"requestId": "cfa605de-72aa-4be9-9ba4-ff7fe8a05323",
+		"identity": {
+			"cognitoIdentityPoolId": null,
+			"cognitoIdentityId": null,
+			"apiKey": "test-invoke-api-key",
+			"principalOrgId": null,
+			"cognitoAuthenticationType": null,
+			"userArn": "arn:aws:iam::<Account-Id>:user/dev",
+			"apiKeyId": "test-invoke-api-key-id",
+			"userAgent": "aws-internal/3 aws-sdk-java/1.11.719 Linux/4.9.184-0.1.ac.235.83.329.metal1.x86_64 OpenJDK_64-Bit_Server_VM/25.242-b08 java/1.8.0_242 vendor/Oracle_Corporation",
+			"accountId": "<Account-Id>",
+			"caller": "AIDAVKYPAMPM2GA7JBHVV",
+			"sourceIp": "test-invoke-source-ip",
+			"accessKey": "",
+			"cognitoAuthenticationProvider": null,
+			"user": "AIDAVKYPAMPM2GA7JBHVV"
+		},
+		"domainName": "testPrefix.testDomainName",
+		"apiId": "tqqv3iiszl"
+	},
+	"body": null,
+	"isBase64Encoded": false
+}

@@ -1,0 +1,57 @@
+# Zip lambda layers
+cd layers/token_manager && \
+rm token_manager.zip && \
+zip -r  token_manager.zip . \
+    -i  token_manager.py \
+        '*python*' \
+    -x  '*__pycache__*' \
+        '*.DS_Store*' && \
+cd -
+
+cd layers/policy_manager && \
+rm policy_manager.zip && \
+zip -r  policy_manager.zip . \
+    -i  policy_manager.py \
+        '*python*' \
+    -x  '*__pycache__*' \
+        '*.DS_Store*' && \
+cd -
+
+cd s3_manager/src && \
+rm ../s3_manager_lambda.zip && \
+zip -r ../s3_manager_lambda.zip . \
+    -i  bucket.py \
+        prefix.py \
+        tag.py \
+        access_point.py \
+        db_nosql.py \
+        apis.py \
+        partition_approaches.py \
+        constants.py \
+        helper.py \
+        policies/* \
+    -x  '*__pycache__*' \
+        '*.DS_Store*' && \
+cd -
+
+# Test lambda locally
+python-lambda-local -f get_token helper.py samples/event_get_token.json
+
+python-lambda-local -f put_object apis.py samples/event_apis_put.json -e samples/env_vars.json
+python-lambda-local -f get_object apis.py samples/event_apis_get.json -e samples/env_vars.json
+
+python-lambda-local -f put_by_bucket bucket.py samples/event_bucket_put.json -e samples/env_vars.json
+python-lambda-local -f get_by_bucket bucket.py samples/event_bucket_get.json -e samples/env_vars.json
+
+python-lambda-local -f put_by_prefix prefix.py samples/event_prefix_put.json -e samples/env_vars.json
+python-lambda-local -f get_by_prefix prefix.py samples/event_prefix_get.json -e samples/env_vars.json
+
+python-lambda-local -f put_by_tag tag.py samples/event_tag_put.json -e samples/env_vars.json
+python-lambda-local -f get_by_tag tag.py samples/event_tag_get.json -e samples/env_vars.json
+
+python-lambda-local -f put_by_access_point access_point.py samples/event_ap_put.json -e samples/env_vars.json
+python-lambda-local -f get_by_access_point access_point.py samples/event_ap_get.json -e samples/env_vars.json
+
+python-lambda-local -f put_by_db_nosql db_nosql.py samples/event_dbnosql_put.json -e samples/env_vars.json
+python-lambda-local -f get_by_db_nosql db_nosql.py samples/event_dbnosql_get.json -e samples/env_vars.json
+

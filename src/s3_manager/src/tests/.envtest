@@ -1,0 +1,4 @@
+  AWS_ACCOUNT_ID=<Account-Id>
+  AWS_REGION=us-east-1
+  NOSQL_DBTABLE_NAME=aws-saas-s3-tenantmd
+  IAMROLE_LMDEXEC_ARN=arn:aws:iam::<Account-Id>:role/aws-lambda-s3

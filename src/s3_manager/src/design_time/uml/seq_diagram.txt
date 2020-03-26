@@ -1,0 +1,13 @@
+@startuml
+	autonumber
+	"User"->"/object\n API": {Authorization: Bearer JWT} +\n {payload for PUT only}
+	"/object\n API"->"/object\n API": Validate fields
+	"/object\n API"->"User": 401 (if Unauthorized)
+	"/object\n API"<->"token_manager\n Lambda layer": GetUserContext(JWT)
+	"/object\n API"->"policy_manager\n Lambda layer": GetPolicy(policy_template)
+    "/object\n API"<-"policy_manager\n Lambda layer": IAM Policy
+	"/object\n API"->"/object\n API": AssumeRole (session policy)
+	"/object\n API"->"AWS SDK\n s3 APIs": put_object/list_object_v2
+	"/object\n API"<-"AWS SDK\n s3 APIs": 200/201 (Success)/500 (Error)
+	"User"<-"/object\n API": 200/201 (Success)/500 (Error)
+@enduml

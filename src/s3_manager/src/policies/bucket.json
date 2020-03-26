@@ -1,0 +1,55 @@
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Action": [
+        "logs:CreateLogGroup",
+        "logs:CreateLogStream",
+        "logs:PutLogEvents"
+      ],
+      "Resource": "*"
+    },
+    {
+      "Effect": "Allow",
+      "Action": [
+        "sts:AssumeRole"
+      ],
+      "Resource": "*"
+    },
+    {
+      "Effect": "Allow",
+      "Action": [
+        "s3:CreateBucket",
+        "s3:ListAllMyBuckets",
+        "s3:GetBucketLocation",
+        "s3:PutBucketPublicAccessBlock"
+      ],
+      "Resource": [
+        "*"
+      ]
+    },
+    {
+      "Effect": "Allow",
+      "Action": [
+        "s3:ListBucket"
+      ],
+      "Resource": ["{bucket_arn}"],
+      "Condition":{
+          "StringEquals": {
+            "s3:prefix": "{user_id}"
+          }
+        }
+    },
+    {
+      "Effect": "Allow",
+      "Action": [
+        "s3:PutObject*",
+        "s3:GetObject*"
+      ],
+      "Resource": [
+        "{bucket_arn}/{user_id}/*"
+      ]
+    }
+  ]
+}

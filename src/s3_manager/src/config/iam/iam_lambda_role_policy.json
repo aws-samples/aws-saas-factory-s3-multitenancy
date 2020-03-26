@@ -1,0 +1,45 @@
+{
+	"Version": "2012-10-17",
+	"Statement": [
+			{
+					"Effect": "Allow",
+					"Action": [
+							"logs:CreateLogGroup",
+							"logs:CreateLogStream",
+							"logs:PutLogEvents"
+					],
+					"Resource": "*"
+			},
+			{
+					"Effect": "Allow",
+					"Action": [
+							"s3:ListBucket",
+							"s3:CreateBucket",
+							"s3:GetBucket*",
+							"s3:GetObject*",
+							"s3:PutObject*",
+							"s3:ListAllMyBuckets",
+							"s3:CreateAccessPoint*",
+							"s3:PutAccessPoint*",
+							"s3:GetAccessPoint*",
+							"s3:PutBucketPublicAccessBlock"
+					],
+					"Resource": "*"
+			},
+			{
+					"Effect": "Allow",
+					"Action": [
+							"dynamodb:PutItem",
+							"dynamodb:Query"
+					],
+					"Resource": "*"
+			},
+			{
+					"Effect": "Allow",
+					"Action": [
+							"sts:AssumeRole"
+					],
+					"Resource": "*"
+			}
+	]
+}
