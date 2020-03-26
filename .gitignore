@@ -9,3 +9,5 @@ media/*
 .vscode/
 
 __pycache__
+src/s3_manager/src/policy_manager.py
+src/s3_manager/src/token_manager.py
