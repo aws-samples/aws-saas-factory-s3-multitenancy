@@ -129,8 +129,8 @@ Here is a list of APIs implemented.
 For mac, open *Terminal*. <br/>
 For Windows, open *Start -> Git -> Git Bash*
 ```
-git clone https://github.com/sujituk/aws-saas-factory-s3
-cd aws-saas-s3/src
+git clone https://github.com/aws-samples/aws-saas-s3-multitenancy.git
+cd aws-saas-s3-multitenancy/src
 bash setup.sh
 ```
 This would take 1 to 2 minutes for setup.
