@@ -24,11 +24,13 @@ This repository describes approaches and hands-on exercises for storing Multi-te
   - [Built With](#built-with)
   - [Versioning](#versioning)
   - [Authors](#authors)
+  - [Code of Conduct](#code-of-conduct)
+  - [Contributing](#contributing)
   - [License](#license)
-  - [Acknowledgments](#acknowledgments)
+
 
 ## Introduction
-Amazon S3 is storage for the internet. You can use Amazon S3 to store and retrieve any amount of data at any time, from anywhere on the web. Amazon S3 provides multiple approaches to manage data based on design needs for scalability, security, cost-efficiency and performance. Five approaches are illustrated below. Some of these approaches can be combined together as needed.
+Amazon S3 is storage for the internet. You can use Amazon S3 to store and retrieve any amount of data at any time, from anywhere on the web. Amazon S3 provides multiple approaches to manage data based on design needs for scalability, security, cost-efficiency and performance. Five approaches are illustrated below. Some of these approaches can be combined to suit requirements.
 1. Bucket
 2. Prefix
 3. Tag
