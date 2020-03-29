@@ -1,3 +1,10 @@
+# Create symlinks to lambda layer
+ln -s ../../layers/token_manager/python/lib/python3.7/site-packages/token_manager.py \
+    token_manager.py
+
+ln -s ../../layers/policy_manager/python/lib/python3.7/site-packages/policy_manager.py \
+    policy_manager.py
+
 # Zip lambda layers
 cd layers/token_manager && \
 rm token_manager.zip && \
