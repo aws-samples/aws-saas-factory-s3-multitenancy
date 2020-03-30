@@ -84,8 +84,7 @@ Amazon S3 is storage for the internet. You can use Amazon S3 to store and retrie
 
 ## High Level Architecture
 
-Multi-tenant data can be stored on S3 in multiple ways. In this hands-on, user's identity is used to distinguish the ownership of the objects . The identity is a JWT (JSON Web Token) comprised of user's identity/name and tenant's identity/user to which the user belongs. The JWT token is signed using a random text. In reality, [AWS Key Management Service](https://docs.aws.amazon.com/kms/index.html) can be used for stronger security. Another option for the JWT Token is using [Amazon Cognito](https://aws.amazon.com/cognito/) which yields a JWT Token (ID, Access and Refresh) signed by Amazon Cognito.
-REST APIs designed using OpenAPI (3.0) and developed in Python (3.7) are hosted in [Amazon API Gateway](https://aws.amazon.com/api-gateway/). User issues curl statements to the APIs that invoke Lambda functions. These functions internally invokes Lambda Layers that inspect the token and generate Identity-based user policies based on context embedded in JWT to create short-term security credentials (AWS Security Token Service (STS)). Subsequently, AssumeRole is issued to access AWS services to perform PUT and GET based operations using AWS SDK to manage data using Amazon S3 Buckets, Prefix, Tag, Access Points and DB-based metadata.
+Multi-tenant data can be stored on S3 in multiple ways. In this hands-on, user's identity is used to manage the ownership of the objects. The identity is a JWT (JSON Web Token) comprised of user's identity/name and tenant's identity/user to which the user belongs. The JWT token is signed using a random text. In reality, [AWS Key Management Service](https://docs.aws.amazon.com/kms/index.html) can be used for stronger security. Another option for the JWT Token is using [Amazon Cognito](https://aws.amazon.com/cognito/) which yields a JWT Token (ID, Access and Refresh) signed by Amazon Cognito. REST APIs designed using OpenAPI (3.0) and developed in Python (3.7) are hosted in [Amazon API Gateway](https://aws.amazon.com/api-gateway/). User issues curl statements to the APIs that invoke Lambda functions. These functions internally invoke Lambda Layers that inspect the token and generate Identity-based user policies based on context embedded in JWT to create short-term security credentials (AWS Security Token Service (STS)). Subsequently, AssumeRole is issued to access AWS services to perform PUT and GET based operations using AWS SDK to manage data using Amazon S3 Buckets, Prefix, Tag, Access Points and DB-based metadata.
 
 ![HighLevelFlow](images/high_level_flow.png)
 
@@ -131,8 +130,8 @@ Here is a list of APIs implemented.
 For mac, open *Terminal*. <br/>
 For Windows, open *Start -> Git -> Git Bash*
 ```
-git clone https://github.com/aws-samples/aws-saas-factory-s3.git
-cd aws-saas-factory-s3/src
+git clone https://github.com/aws-samples/aws-saas-factory-s3-multitenancy.git
+cd aws-saas-factory-s3-multitenancy/src
 bash setup.sh
 ```
 This would take 1 to 2 minutes for setup.
