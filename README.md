@@ -24,7 +24,6 @@ This repository describes approaches and hands-on exercises for storing Multi-te
   - [Uninstalling](#uninstalling)
   - [Built With](#built-with)
   - [Versioning](#versioning)
-  - [Authors](#authors)
   - [Code of Conduct](#code-of-conduct)
   - [Contributing](#contributing)
   - [License](#license)
@@ -672,9 +671,6 @@ Delete buckets starting with `aws-saas-*`
 
 ## Versioning
 Initial Version (3/26/2020)
-
-## Authors
-Developed by [Sujit Khasnis](sujitkh@amazon.com)
 
 ## Code of Conduct
 [View](CODE_OF_CONDUCT.md)
