@@ -1,7 +1,52 @@
 # Storing Multi-Tenant Data on Amazon S3
 This repository describes approaches and hands-on exercises for storing Multi-tenant data using [Amazon Simple Storage Service](https://aws.amazon.com/s3/) (Amazon S3)
 
+## Security notice — please read before deploying
+
+**This is a teaching exercise for S3 data-partitioning approaches. It is not production ready, it
+has no authentication, and it should not be deployed into an account that holds anything you care
+about or left running.**
+
+The partitioning approaches below are the subject of the exercise, and they work. What the exercise
+does *not* implement is any verification of who is calling. Specifically:
+
+- **The API methods are deployed with no authorization.** `src/setup.sh` passes
+  `--authorization-type "NONE"` when it creates the API Gateway methods, so every endpoint is open
+  to anyone who knows the URL. Note that `src/s3_manager/src/design_time/api_spec/openapi.yaml`
+  *does* declare a `bearerAuth` security scheme and applies it to the operations — `setup.sh`
+  simply never imports that spec. The design intent was there; the deployment script diverges
+  from it.
+- **Tenant identity is taken from request headers.** In
+  `src/layers/token_manager/.../token_manager.py`, `get_header()` reads `x-tenant-id` and
+  `x-user-id` straight off the request when no token is present, and then *mints* a token for
+  whatever tenant was named. A caller chooses their own tenant simply by setting a header.
+- **The token signing key defaults to a literal in this repository.** `vend()` and `get_header()
+  ` both default `secret_key` to `'aws-saas-factory'`, so a token presented instead of the headers
+  can be forged by anyone reading this source.
+- **This affects all five approaches, not just one.** Bucket, Prefix, Tag, Access Point and
+  Database (NoSQL) all resolve the caller through the same `helper.get_tenant_context()`.
+- **The Lambda execution role is broad.** It holds `s3:GetObject*`/`s3:PutObject*` together with
+  `s3:CreateBucket` and `s3:ListAllMyBuckets` on `Resource: "*"`, so the blast radius of a call is
+  not limited to the buckets this exercise creates.
+
+The consequence is that anyone who can reach a deployment of this exercise can read and write any
+tenant's data by naming that tenant in a header. The S3 partitioning is doing its job; it is the
+identity feeding it that is unverified.
+
+**If you are adapting any of these approaches for real use**, take the partitioning patterns and
+replace the identity layer entirely: put a real authorizer in front of the API (Amazon Cognito, or
+an OIDC provider), verify the token's signature against a key you control rather than a default
+string, derive the tenant from a verified claim rather than a header, and scope the Lambda role to
+the specific buckets and prefixes it needs. The notes under *Introduction* already point at
+[AWS KMS](https://docs.aws.amazon.com/kms/index.html) and
+[Amazon Cognito](https://aws.amazon.com/cognito/) for the token; this notice is to make clear that
+those are prerequisites for real use rather than optional improvements.
+
+Note also that `src/setup.sh` pins `--runtime python3.7`, which AWS Lambda no longer accepts for
+new functions, so a fresh deployment of this exercise will fail until that is updated.
+
 ## Table of Contents
+  - [Security notice](#security-notice--please-read-before-deploying)
   - [Introduction](#introduction)
   - [Approaches](#approaches)
   - [High Level Architecture](#high-level-architecture)
