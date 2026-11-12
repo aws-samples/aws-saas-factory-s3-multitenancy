@@ -59,6 +59,13 @@ def get_object(sts_creds, req_header):
     """
     try:
         s3_client = helper.get_boto3_client("s3", sts_creds)
+        # Verify we own the bucket before reading from it. This bucket name is
+        # shared by every tenant and derived from the account id alone, so it is the
+        # easiest name in this sample to guess and squat. Without this check an
+        # account holding the name could serve fabricated objects back to tenants.
+        # Deliberately verify-only: a read must not create the bucket. If it does
+        # not exist, fall through and let list_objects_v2 report NoSuchBucket.
+        helper.verify_bucket_owner(s3_client, req_header["bucket_name"])
         api_list_resp = s3_client.list_objects_v2(Bucket=req_header["bucket_name"],
                                                   Prefix=req_header["prefix"])
 
