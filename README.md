@@ -28,6 +28,15 @@ does *not* implement is any verification of who is calling. Specifically:
 - **The Lambda execution role is broad.** It holds `s3:GetObject*`/`s3:PutObject*` together with
   `s3:CreateBucket` and `s3:ListAllMyBuckets` on `Resource: "*"`, so the blast radius of a call is
   not limited to the buckets this exercise creates.
+- **The bucket names are predictable.** S3 bucket names are globally unique across all AWS
+  accounts, and every name here is a fixed prefix plus your account id — plus the tenant id, for
+  the bucket-per-tenant approach only. The code asserts ownership with `ExpectedBucketOwner`
+  before it reads or writes, so a name already held by another account now fails closed instead of
+  silently sending your tenants' data there. What that assertion cannot do is get the name back:
+  if somebody registers `aws-saas-s3-prefix-<your-account-id>` before you do, this exercise will
+  refuse to run that approach in your account, permanently. **For real use, give bucket names
+  enough random entropy that they cannot be guessed ahead of you** — an ownership check is a
+  safety net for a name you have lost, not a substitute for a name nobody can predict.
 
 The consequence is that anyone who can reach a deployment of this exercise can read and write any
 tenant's data by naming that tenant in a header. The S3 partitioning is doing its job; it is the
